@@ -51,22 +51,6 @@ export default function MusicPlayer() {
     };
   }, [isPlaying]);
 
-  const togglePlay = async () => {
-    if (!audioRef.current) return;
-
-    try {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        await audioRef.current.play();
-        setIsPlaying(true);
-      }
-    } catch (error) {
-      console.log("Audio play failed:", error);
-    }
-  };
-
   const toggleMute = () => {
     if (audioRef.current) {
       audioRef.current.muted = !isMuted;
@@ -75,47 +59,56 @@ export default function MusicPlayer() {
   };
 
   return (
-    <div className="flex flex-col gap-3 p-4 bg-rose-900/50 rounded-2xl">
+    <div className="flex flex-col gap-3 p-4 bg-gradient-to-br from-rose-900/60 to-pink-900/40 rounded-2xl backdrop-blur-sm border border-rose-800/30">
       <audio ref={audioRef} loop preload="auto" controls={false}>
         <source src={music} type="audio/webm" />
         Ваш браузер не поддерживает аудио элемент.
       </audio>
 
-      <div className="flex items-center gap-3">
-        <div className="flex-shrink-0">
-          <Music className="w-6 h-6 text-rose-200" />
+      <div className="flex items-center justify-between">
+        {/* Левая часть - иконка и статус */}
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <Music
+              className={`w-7 h-7 ${
+                isPlaying ? "text-green-400" : "text-rose-200"
+              }`}
+            />
+            {isPlaying && (
+              <div className="absolute -top-1 -right-1">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              </div>
+            )}
+          </div>
+          <div className="flex flex-col">
+            <span className="text-rose-100 text-sm font-medium">
+              {isPlaying ? "Музыка жаздырылууда" : "Музыка токтоп турат"}
+            </span>
+            <span className="text-rose-300/70 text-xs">
+              {isMuted ? "Үн өчүрүлгөн" : "Үн кошулган"}
+            </span>
+          </div>
         </div>
 
-        <button
-          onClick={togglePlay}
-          className="flex items-center gap-3 px-4 py-3 bg-rose-700 hover:bg-rose-600 rounded-xl transition-all duration-300 group flex-1 min-h-[48px] active:scale-95"
-        >
-          {isPlaying ? (
-            <Pause className="w-5 h-5 text-rose-100" />
-          ) : (
-            <Play className="w-5 h-5 text-rose-100" />
-          )}
-          <span className="text-rose-100 text-sm font-medium">
-            {isPlaying ? "Токтотуу" : "Жаздыруу"}
-          </span>
-        </button>
-
+        {/* Правая часть - кнопка mute */}
         <button
           onClick={toggleMute}
-          className="p-3 bg-rose-800 hover:bg-rose-700 rounded-xl transition-all duration-300 group min-h-[48px] min-w-[48px] flex items-center justify-center active:scale-95"
+          className="p-3 bg-gradient-to-br from-rose-800 to-rose-700 hover:from-rose-700 hover:to-rose-600 rounded-xl transition-all duration-300 group min-h-[48px] min-w-[48px] flex items-center justify-center active:scale-95 shadow-lg hover:shadow-xl"
         >
           {isMuted ? (
-            <VolumeX className="w-5 h-5 text-rose-300" />
+            <VolumeX className="w-5 h-5 text-rose-100 group-hover:scale-110 transition-transform" />
           ) : (
-            <Volume2 className="w-5 h-5 text-rose-300" />
+            <Volume2 className="w-5 h-5 text-rose-100 group-hover:scale-110 transition-transform" />
           )}
         </button>
       </div>
 
       {!isPlaying && (
-        <p className="text-rose-300/70 text-xs text-center animate-pulse">
-          📱 Музыканы кошуу үчүн экранды басыңыз
-        </p>
+        <div className="bg-amber-500/20 border border-amber-500/30 rounded-lg p-2">
+          <p className="text-amber-200 text-xs text-center">
+            📱 Музыканы кошуу үчүн экранды басыңыз
+          </p>
+        </div>
       )}
     </div>
   );
