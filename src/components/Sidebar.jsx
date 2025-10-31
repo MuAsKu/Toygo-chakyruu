@@ -1,4 +1,5 @@
 import React from "react";
+import MusicPlayer from "./MusicPlayer";
 import { X, Heart, Sparkles, Home, Calendar, Clock, Users } from "lucide-react";
 
 export default function Sidebar({ open, onClose }) {
@@ -80,6 +81,10 @@ export default function Sidebar({ open, onClose }) {
               <X size={24} className="relative z-10" />
               <div className="absolute inset-0 bg-gradient-to-br from-rose-600 to-rose-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
+          </div>
+
+          <div className="mb-6 fade-in-up">
+            <MusicPlayer />
           </div>
 
           {/* Навигация */}
