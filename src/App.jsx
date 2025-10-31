@@ -29,7 +29,7 @@ export default function App() {
       text: "Нүрдөөлөт & Самаргүл <br> Биздин үйлөнүү тоюбузга чакырабыз!",
     },
     {
-      title: "Сиздерди урматтоо менен күтөбуз!",
+      title: "СИЗДЕРДИ БАЛДАРЫБЫЗДЫН ҮЙЛӨНҮҮ ТОЮНА ЧАКЫРАБЫЗ!",
       text: "",
     },
   ];
@@ -223,6 +223,9 @@ export default function App() {
             <p className="text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed wedding-card rounded-3xl p-8">
               Сиздин катышууңуз биз үчүн чоң{" "}
               <span className="text-rose-600 font-semibold">баалуулук!</span>
+            </p>
+            <p className="text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed wedding-card rounded-3xl p-8">
+              Урматто менен Муканбет и Уркуя
             </p>
 
             <div className="mt-12 flex justify-center gap-4">

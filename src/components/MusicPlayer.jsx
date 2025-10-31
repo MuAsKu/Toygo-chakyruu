@@ -5,33 +5,51 @@ import music from "../../public/music.webm";
 export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [showMobileHint, setShowMobileHint] = useState(false);
   const audioRef = useRef(null);
 
-  // Определяем мобильное устройство
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-  // Загрузка состояния из localStorage при монтировании
   useEffect(() => {
-    const savedState = localStorage.getItem("musicState");
-    if (savedState === "playing" && !isMobile) {
-      setIsPlaying(true);
-    }
-  }, [isMobile]);
+    const tryAutoPlay = async () => {
+      try {
+        if (audioRef.current) {
+          audioRef.current.volume = 0.1;
+          await audioRef.current.play();
+          setIsPlaying(true);
 
-  // Сохранение состояния в localStorage
-  useEffect(() => {
-    localStorage.setItem("musicState", isPlaying ? "playing" : "paused");
-  }, [isPlaying]);
+          setTimeout(() => {
+            if (audioRef.current) {
+              audioRef.current.volume = 1.0;
+            }
+          }, 1000);
+        }
+      } catch (error) {
+        console.log("Auto-play blocked on mobile");
+      }
+    };
 
-  // Автоматическое воспроизведение для десктопов
+    tryAutoPlay();
+  }, []);
+
   useEffect(() => {
-    if (!isMobile && isPlaying && audioRef.current) {
-      audioRef.current.play().catch((error) => {
-        console.log("Auto-play failed:", error);
+    const handleUserInteraction = () => {
+      if (!isPlaying && audioRef.current) {
+        audioRef.current
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch((error) => console.log("Play after interaction failed"));
+      }
+    };
+
+    const events = ["click", "touchstart", "scroll", "keydown"];
+    events.forEach((event) => {
+      document.addEventListener(event, handleUserInteraction, { once: true });
+    });
+
+    return () => {
+      events.forEach((event) => {
+        document.removeEventListener(event, handleUserInteraction);
       });
-    }
-  }, [isPlaying, isMobile]);
+    };
+  }, [isPlaying]);
 
   const togglePlay = async () => {
     if (!audioRef.current) return;
@@ -41,21 +59,11 @@ export default function MusicPlayer() {
         audioRef.current.pause();
         setIsPlaying(false);
       } else {
-        // На мобильных показываем подсказку
-        if (isMobile) {
-          setShowMobileHint(true);
-          setTimeout(() => setShowMobileHint(false), 3000);
-        }
-
         await audioRef.current.play();
         setIsPlaying(true);
       }
     } catch (error) {
       console.log("Audio play failed:", error);
-      if (isMobile) {
-        setShowMobileHint(true);
-        setTimeout(() => setShowMobileHint(false), 3000);
-      }
     }
   };
 
@@ -68,27 +76,16 @@ export default function MusicPlayer() {
 
   return (
     <div className="flex flex-col gap-3 p-4 bg-rose-900/50 rounded-2xl">
-      {/* Аудио элемент */}
-      <audio ref={audioRef} loop preload="metadata" controls={false}>
+      <audio ref={audioRef} loop preload="auto" controls={false}>
         <source src={music} type="audio/webm" />
-        <source src="/music/wedding-music.mp3" type="audio/mpeg" />
         Ваш браузер не поддерживает аудио элемент.
       </audio>
 
-      {/* Подсказка для мобильных */}
-      {showMobileHint && (
-        <div className="bg-amber-500/90 text-white text-xs p-2 rounded-lg text-center animate-pulse">
-          🎵 Музыканы баштоо үчүн "Жаздыруу" баскычын басыңыз
-        </div>
-      )}
-
       <div className="flex items-center gap-3">
-        {/* Иконка музыки */}
         <div className="flex-shrink-0">
           <Music className="w-6 h-6 text-rose-200" />
         </div>
 
-        {/* Кнопка воспроизведения/паузы */}
         <button
           onClick={togglePlay}
           className="flex items-center gap-3 px-4 py-3 bg-rose-700 hover:bg-rose-600 rounded-xl transition-all duration-300 group flex-1 min-h-[48px] active:scale-95"
@@ -103,11 +100,9 @@ export default function MusicPlayer() {
           </span>
         </button>
 
-        {/* Кнопка mute/unmute */}
         <button
           onClick={toggleMute}
           className="p-3 bg-rose-800 hover:bg-rose-700 rounded-xl transition-all duration-300 group min-h-[48px] min-w-[48px] flex items-center justify-center active:scale-95"
-          aria-label={isMuted ? "Үндү кошуу" : "Үндү өчүрүү"}
         >
           {isMuted ? (
             <VolumeX className="w-5 h-5 text-rose-300" />
@@ -117,10 +112,9 @@ export default function MusicPlayer() {
         </button>
       </div>
 
-      {/* Постоянная подсказка для мобильных */}
-      {isMobile && !showMobileHint && (
-        <p className="text-rose-300/70 text-xs text-center">
-          Музыканы угуу үчүн "Жаздыруу" баскычын басыңыз
+      {!isPlaying && (
+        <p className="text-rose-300/70 text-xs text-center animate-pulse">
+          📱 Музыканы кошуу үчүн экранды басыңыз
         </p>
       )}
     </div>
