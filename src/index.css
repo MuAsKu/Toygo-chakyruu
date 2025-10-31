@@ -1,0 +1,274 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Marck+Script&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  --sidebar-width: 65vw;
+  --primary-rose: #e11d48;
+  --secondary-rose: #fecdd3;
+  --gold: #fbbf24;
+}
+
+/* Базовые стили */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Каллиграфия */
+.calligraphy-large {
+  font-family: 'Dancing Script', cursive;
+  line-height: 0.9;
+  background: linear-gradient(135deg, var(--primary-rose), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  font-size: 1.1em; 
+}
+
+
+/* Сердечко анимация */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Анимации появления */
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+/* Плавающие элементы */
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Свадебные декорации */
+.rose-petal {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(45deg, var(--secondary-rose), var(--primary-rose));
+  border-radius: 50% 0 50% 50%;
+  opacity: 0.7;
+  animation: fall 8s linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Красивые фото */
+.section-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(225, 29, 72, 0.1) 50%,
+    transparent 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.section-image img {
+  mask-image: linear-gradient(to bottom, black 85%, transparent 98%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 98%);
+  transition: all 0.5s ease;
+  filter: brightness(1.02) contrast(1.05);
+}
+
+.section-image:hover img {
+  transform: scale(1.02);
+  filter: brightness(1.05) contrast(1.1);
+}
+
+/* Свадебные карточки */
+.wedding-card {
+  background: linear-gradient(135deg, #fff 0%, #fef2f2 100%);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  box-shadow: 
+    0 10px 25px -5px rgba(225, 29, 72, 0.1),
+    0 5px 10px -5px rgba(251, 191, 36, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.wedding-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 20px 40px -10px rgba(225, 29, 72, 0.15),
+    0 10px 20px -5px rgba(251, 191, 36, 0.15);
+}
+
+/* Календарь стили */
+.calendar-day {
+  transition: all 0.3s ease;
+}
+
+.calendar-day:hover:not(.wedding-day) {
+  background-color: #fef2f2;
+  transform: scale(1.1);
+}
+
+.wedding-day {
+  background: linear-gradient(135deg, var(--primary-rose), var(--gold));
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Декоративные линии */
+.decorative-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--primary-rose), transparent);
+  position: relative;
+}
+
+.decorative-line::before {
+  content: "❤";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--primary-rose);
+  font-size: 1.2rem;
+  background: white;
+  padding: 0 10px;
+}
+
+/* Бургер меню */
+.burger {
+  width: 36px;
+  height: 36px;
+  transition: all 0.3s ease;
+}
+
+.burger:hover {
+  transform: scale(1.1);
+}
+
+/* Кнопки */
+.wedding-button {
+  background: linear-gradient(135deg, var(--primary-rose), var(--gold));
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+}
+
+.wedding-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(225, 29, 72, 0.4);
+}
+
+/* Иконки */
+.icon-rose {
+  color: var(--primary-rose);
+  filter: drop-shadow(0 2px 4px rgba(225, 29, 72, 0.2));
+}
+
+.icon-gold {
+  color: var(--gold);
+  filter: drop-shadow(0 2px 4px rgba(251, 191, 36, 0.3));
+}
+
+/* Анимированный фон */
+.animated-bg {
+  background: linear-gradient(-45deg, #fef2f2, #fff, #fef2f2, #fff7ed);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Свадебные узоры */
+.pattern-dots {
+  background-image: radial-gradient(var(--secondary-rose) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.pattern-hearts::before {
+  content: "♥";
+  position: absolute;
+  color: var(--secondary-rose);
+  font-size: 8px;
+  opacity: 0.3;
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--primary-rose), var(--gold));
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(var(--gold), var(--primary-rose));
+}
