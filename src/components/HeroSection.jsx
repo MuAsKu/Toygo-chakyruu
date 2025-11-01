@@ -57,7 +57,7 @@ export default function HeroSection({ data }) {
           Алоолонуп сүйүүбүз нур болууга <br />
           Акбатаны бериниз деп чакырабыз <br />
           <span className="text-rose-600 font-semibold">
-            Нүрдөөлөт менен Самаргүлдүн бул тоюна
+            Нурболот менен Самаргүлдүн бул тоюна
           </span>
         </p>
 
