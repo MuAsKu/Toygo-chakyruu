@@ -18,7 +18,7 @@ export default function App() {
 
   const sections = [
     {
-      title: "Нүрдөөлөт",
+      title: "Нурболот",
       subtitle: "&",
       name2: "Самаргүл",
       date: "22.11.2025ж",
@@ -26,7 +26,7 @@ export default function App() {
     },
     {
       title: "Той",
-      text: "Нүрдөөлөт & Самаргүл <br> Сиздерди балдарыбыздын үйлөнүү тоюна чакырабыз!",
+      text: "Нурболот & Самаргүл <br> Сиздерди балдарыбыздын үйлөнүү тоюна чакырабыз!",
     },
     {
       title: "СИЗДЕРДИ БАЛДАРЫБЫЗДЫН ҮЙЛӨНҮҮ ТОЮНА ЧАКЫРАБЫЗ!",
@@ -225,7 +225,7 @@ export default function App() {
               <span className="text-rose-600 font-semibold">баалуулук!</span>
             </p>
             <p className="text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed wedding-card rounded-3xl p-8">
-              Урматтоо менен Муканбет и Уркуя
+              Урматтоо менен Муканбет жана Уркуя
             </p>
 
             <div className="mt-12 flex justify-center gap-4">
